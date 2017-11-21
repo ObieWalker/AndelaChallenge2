@@ -1,6 +1,10 @@
+
+let idCounter = 1001
+
 class Staff{
-  constructor(id, firstName,lastName, dept, level){
-    this.id= id
+  constructor(firstName,lastName, dept, level){
+    //id numbers start from 1002
+    this.id= idCounter++
     this.firstName = firstName
     this.lastName = lastName
     this.dept = dept
@@ -52,10 +56,21 @@ class Staff{
   }
 
   static FindByFullName(firstName, lastName){
+    let fullName = firstName +" "+lastName
     return this.All().filter(function(staff){
-      return staff.getFullName() === firstName lastName
+      return staff.getFullName() === fullName
     })
   }  
+
+  static editStaffDetails(id, newFN, newSN, newDept, newLevel){
+    let matchedStaff = Staff.FindById(id)
+    matchedStaff.firstName=newFN
+    matchedStaff.lastName=newSN
+    matchedStaff.dept = newDept
+    matchedStaff.level = newLevel
+    matchedStaff.save()
+    return matchedStaff
+  }
 
 
 
@@ -63,25 +78,28 @@ class Staff{
 
 //this details inheritance and overriding
 class BoardMember extends Staff{
+
   constructor(id, firstName, lastName, role){
-    super(id, firstName, lastName) 
+    super(firstName, lastName) 
+    this.id = id
     this.role = role
     this.save()
     
   }
 
 
-  promoteStaff(id, newLevel){
-    return "Welcome aboard!"
-    return FindById(id)
+  promoteStaff(id){
+    let matchedStaff = Staff.FindById(id)
+    return matchedStaff.level= matchedStaff.level + 1
+    }
   }
-
 
 
 
 }
 
-
+let boardMember1 = new Staff(212, "John", "Micheal", "CEO")
+let staff1 = new Staff(3245, "Akpan", "Stevens", "Operations", 6)
 
 //an array to store all staff member instances
 Staff._All = []
