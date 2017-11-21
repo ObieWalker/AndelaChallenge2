@@ -3,6 +3,7 @@ let idCounter = 1001
 
 class Staff{
   constructor(firstName,lastName, dept, level){
+    //id numbers start from 1002
     this.id= idCounter++
     this.firstName = firstName
     this.lastName = lastName
