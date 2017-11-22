@@ -39,8 +39,8 @@ describe("StaffClass", function () {
 
 	describe("should output that the staff member accessed this door", function () {
 		var staff78 = new _main2.default("Judith", "Maureen", "Sales", 9);
-		it("should return Judith Maureen with ID number 1003 has accessed this door", function () {
-			assert.equal(staff78.hasAccessed(), "Judith Maureen with ID number 1003 has accessed this door");
+		it("should return Judith Maureen with ID number 1003 has accessed this door.", function () {
+			assert.equal(staff78.hasAccessed(), "Judith Maureen with ID number 1003 has accessed this door.");
 		});
 	});
 });

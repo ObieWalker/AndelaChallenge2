@@ -72,7 +72,15 @@ export default class Staff{
     return matchedStaff
   }
 
+  static deleteStaff(id){
 
+    let matchedStaff = this.FindById(id)
+        
+    for (var key in personal_info ){
+      matchedStaff[key] = null;
+    }
+    return `${matchedStaff.firstName} ${matchedStaff.lastName} is not a staff member.`
+  }
 
 }
 

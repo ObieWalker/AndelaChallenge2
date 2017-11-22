@@ -102,6 +102,17 @@ var Staff = function () {
       matchedStaff.level = newLevel;
       return matchedStaff;
     }
+  }, {
+    key: "deleteStaff",
+    value: function deleteStaff(id) {
+
+      var matchedStaff = this.FindById(id);
+
+      for (var key in personal_info) {
+        matchedStaff[key] = null;
+      }
+      return matchedStaff.firstName + " " + matchedStaff.lastName + " is not a staff member.";
+    }
   }]);
 
   return Staff;
