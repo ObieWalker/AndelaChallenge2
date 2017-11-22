@@ -3,6 +3,13 @@ export let idCounter = 1001
 
 export default class Staff{
   constructor(firstName,lastName, dept, level){
+    if (!(typeof firstName === 'string') && !(typeof lastName === 'string') && !(typeof level === 'number')){
+        throw TypeError("Invalid arguments type");
+    }
+    if (level < 0 || level> 15){
+        throw Error("Invalid level input")
+    }
+
     //id numbers start from 1002
     this.id= idCounter++
     this.firstName = firstName
@@ -41,6 +48,9 @@ export default class Staff{
   getFullName() {
     return `${this.firstName} ${this.lastName}`
   }
+  getLevelDept(){
+    return ` ${this.firstName} ${this.lastName} is a staff of level ${this.level} in the ${this.dept} department`
+  }
 
 //this details encapsulation
 //this is now class getter, that returns 
@@ -73,13 +83,13 @@ export default class Staff{
   }
 
   static deleteStaff(id){
-
     let matchedStaff = this.FindById(id)
-        
+    let deletedFname = matchedStaff.firstName
+    let deletedLname = matchedStaff.lastName   
     for (var key in personal_info ){
       matchedStaff[key] = null;
     }
-    return `${matchedStaff.firstName} ${matchedStaff.lastName} is not a staff member.`
+    return `${deletedFname} ${deletedLname} is not a staff member.`
   }
 
 }
@@ -88,7 +98,13 @@ export default class Staff{
 export class BoardMember extends Staff{
 
   constructor(id, firstName, lastName, role){
-    super(firstName, lastName) 
+    super(firstName, lastName)
+    if(!(typeof id === 'number')){
+      throw Error("The ID must be a number")
+    } 
+    if(!(id>100001 && id <110001)){
+      throw Error("Please enter an ID value between 4001 and 8001");
+    }
     this.id = id
     this.role = role
     this.save()
@@ -104,6 +120,18 @@ export class BoardMember extends Staff{
 
 
 
+}
+
+export class PartTimeStaff extends Staff{
+
+  constructor(firstName,lastName, dept, level, pt){
+    super(pt)
+    this.pt = "Part time"
+  }
+
+  getDetails(){
+    return `${this. firstName} ${this.lastName} is a ${this.pt} employee`
+  }
 }
 
 //let boardMember1 = new Staff(212, "John", "Micheal", "CEO")

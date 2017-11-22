@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -18,6 +18,13 @@ var Staff = function () {
   function Staff(firstName, lastName, dept, level) {
     _classCallCheck(this, Staff);
 
+    if (!(typeof firstName === 'string') && !(typeof lastName === 'string') && !(typeof level === 'number')) {
+      throw TypeError("Invalid arguments type");
+    }
+    if (level < 0 || level > 15) {
+      throw Error("Invalid level input");
+    }
+
     //id numbers start from 1002
     this.id = (exports.idCounter = idCounter += 1, idCounter - 1);
     this.firstName = firstName;
@@ -28,41 +35,46 @@ var Staff = function () {
   }
 
   _createClass(Staff, [{
-    key: "save",
+    key: 'save',
     value: function save() {
       this.constructor._All.push(this);
     }
   }, {
-    key: "signIn",
+    key: 'signIn',
     value: function signIn() {
-      return this.firstName + " " + this.lastName + " with ID number " + this.id + " has signed in.";
+      return this.firstName + ' ' + this.lastName + ' with ID number ' + this.id + ' has signed in.';
     }
   }, {
-    key: "signOut",
+    key: 'signOut',
     value: function signOut() {
-      return this.firstName + " " + this.lastName + " with ID number " + this.id + " has signed out.";
+      return this.firstName + ' ' + this.lastName + ' with ID number ' + this.id + ' has signed out.';
     }
   }, {
-    key: "hasAccessed",
+    key: 'hasAccessed',
     value: function hasAccessed() {
-      return this.firstName + " " + this.lastName + " with ID number " + this.id + " has accessed this door.";
+      return this.firstName + ' ' + this.lastName + ' with ID number ' + this.id + ' has accessed this door.';
     }
   }, {
-    key: "daysOff",
+    key: 'daysOff',
     value: function daysOff() {
       var level = this.level;
       if (level < 5) {
-        return this.firstName + " " + this.lastName + "  has 10 days off in a year";
+        return this.firstName + ' ' + this.lastName + '  has 10 days off in a year';
       } else if (level > 5 && level < 8) {
-        return this.firstName + " " + this.lastName + " has 15 days off in a year";
+        return this.firstName + ' ' + this.lastName + ' has 15 days off in a year';
       } else if (level >= 8) {
-        return this.firstName + " " + this.lastName + "  has 20 days off in a year";
+        return this.firstName + ' ' + this.lastName + '  has 20 days off in a year';
       }
     }
   }, {
-    key: "getFullName",
+    key: 'getFullName',
     value: function getFullName() {
-      return this.firstName + " " + this.lastName;
+      return this.firstName + ' ' + this.lastName;
+    }
+  }, {
+    key: 'getLevelDept',
+    value: function getLevelDept() {
+      return ' ' + this.firstName + ' ' + this.lastName + ' is a staff of level ' + this.level + ' in the ' + this.dept + ' department';
     }
 
     //this details encapsulation
@@ -70,7 +82,7 @@ var Staff = function () {
     //the class property of _All
 
   }], [{
-    key: "All",
+    key: 'All',
     value: function All() {
       return this._All;
     }
@@ -78,14 +90,14 @@ var Staff = function () {
     //this. will refer to the class
 
   }, {
-    key: "FindById",
+    key: 'FindById',
     value: function FindById(id) {
       return this.All().filter(function (staff) {
         return staff.id === id;
       });
     }
   }, {
-    key: "FindByFullName",
+    key: 'FindByFullName',
     value: function FindByFullName(firstName, lastName) {
       var fullName = firstName + " " + lastName;
       return this.All().filter(function (staff) {
@@ -93,7 +105,7 @@ var Staff = function () {
       });
     }
   }, {
-    key: "editStaffDetails",
+    key: 'editStaffDetails',
     value: function editStaffDetails(id, newFN, newSN, newDept, newLevel) {
       var matchedStaff = Staff.FindById(id);
       matchedStaff.firstName = newFN;
@@ -103,15 +115,15 @@ var Staff = function () {
       return matchedStaff;
     }
   }, {
-    key: "deleteStaff",
+    key: 'deleteStaff',
     value: function deleteStaff(id) {
-
       var matchedStaff = this.FindById(id);
-
+      var deletedFname = matchedStaff.firstName;
+      var deletedLname = matchedStaff.lastName;
       for (var key in personal_info) {
         matchedStaff[key] = null;
       }
-      return matchedStaff.firstName + " " + matchedStaff.lastName + " is not a staff member.";
+      return deletedFname + ' ' + deletedLname + ' is not a staff member.';
     }
   }]);
 
@@ -131,6 +143,12 @@ var BoardMember = exports.BoardMember = function (_Staff) {
 
     var _this = _possibleConstructorReturn(this, (BoardMember.__proto__ || Object.getPrototypeOf(BoardMember)).call(this, firstName, lastName));
 
+    if (!(typeof id === 'number')) {
+      throw Error("The ID must be a number");
+    }
+    if (!(id > 100001 && id < 110001)) {
+      throw Error("Please enter an ID value between 4001 and 8001");
+    }
     _this.id = id;
     _this.role = role;
     _this.save();
@@ -139,7 +157,7 @@ var BoardMember = exports.BoardMember = function (_Staff) {
   }
 
   _createClass(BoardMember, [{
-    key: "promoteStaff",
+    key: 'promoteStaff',
     value: function promoteStaff(id) {
       var matchedStaff = Staff.FindById(id);
       return matchedStaff.level = matchedStaff.level + 1;
@@ -147,6 +165,28 @@ var BoardMember = exports.BoardMember = function (_Staff) {
   }]);
 
   return BoardMember;
+}(Staff);
+
+var PartTimeStaff = exports.PartTimeStaff = function (_Staff2) {
+  _inherits(PartTimeStaff, _Staff2);
+
+  function PartTimeStaff(firstName, lastName, dept, level, pt) {
+    _classCallCheck(this, PartTimeStaff);
+
+    var _this2 = _possibleConstructorReturn(this, (PartTimeStaff.__proto__ || Object.getPrototypeOf(PartTimeStaff)).call(this, pt));
+
+    _this2.pt = "Part time";
+    return _this2;
+  }
+
+  _createClass(PartTimeStaff, [{
+    key: 'getDetails',
+    value: function getDetails() {
+      return this.firstName + ' ' + this.lastName + ' is a ' + this.pt + ' employee';
+    }
+  }]);
+
+  return PartTimeStaff;
 }(Staff);
 
 //let boardMember1 = new Staff(212, "John", "Micheal", "CEO")
