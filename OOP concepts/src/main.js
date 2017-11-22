@@ -1,7 +1,7 @@
 
-let idCounter = 1001
+export let idCounter = 1001
 
-class Staff{
+export default class Staff{
   constructor(firstName,lastName, dept, level){
     //id numbers start from 1002
     this.id= idCounter++
@@ -27,7 +27,8 @@ class Staff{
     return `${this.firstName} ${this.lastName} with ID number ${this.id} has accessed this door.`
   }
   daysOff(){
-    if (level > 5){
+    let level = this.level
+    if (level < 5){
       return `${this.firstName} ${this.lastName}  has 10 days off in a year`
     }
     else if(level>5 && level <8){
@@ -68,7 +69,6 @@ class Staff{
     matchedStaff.lastName=newSN
     matchedStaff.dept = newDept
     matchedStaff.level = newLevel
-    matchedStaff.save()
     return matchedStaff
   }
 
@@ -77,7 +77,7 @@ class Staff{
 }
 
 //this details inheritance and overriding
-class BoardMember extends Staff{
+export class BoardMember extends Staff{
 
   constructor(id, firstName, lastName, role){
     super(firstName, lastName) 
@@ -91,15 +91,15 @@ class BoardMember extends Staff{
   promoteStaff(id){
     let matchedStaff = Staff.FindById(id)
     return matchedStaff.level= matchedStaff.level + 1
-    }
+    
   }
 
 
 
 }
 
-let boardMember1 = new Staff(212, "John", "Micheal", "CEO")
-let staff1 = new Staff(3245, "Akpan", "Stevens", "Operations", 6)
+//let boardMember1 = new Staff(212, "John", "Micheal", "CEO")
+//let staff2 = new Staff(3245, "Akpan", "Stevens", "Operations", 6)
 
 //an array to store all staff member instances
 Staff._All = []
